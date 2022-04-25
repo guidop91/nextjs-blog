@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import { GetStaticProps } from 'next';
 
 import Layout, { siteTitle } from '../components/layout';
 import utilStyles from '../styles/utils.module.css';
 import { getSortedPostsData } from '../lib/posts';
-import { Date } from '../components/date';
+import Date from '../components/date';
 
 export default function Home({ allPostsData }) {
   return (
@@ -28,7 +29,7 @@ export default function Home({ allPostsData }) {
                 <a>{title}</a>
               </Link>
               <br />
-              <small className={utilStyles.lightText}>{date}</small>
+              <small className={utilStyles.lightText}><Date dateString={date} /></small>
             </li>
           ))}
         </ul>
@@ -37,7 +38,7 @@ export default function Home({ allPostsData }) {
   );
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const allPostsData = getSortedPostsData();
   return {
     props: { allPostsData },
